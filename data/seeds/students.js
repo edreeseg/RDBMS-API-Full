@@ -8,7 +8,7 @@ exports.seed = function(knex, Promise) {
         { id: 1, name: 'Harry Potter', cohort_id: 2 },
         { id: 2, name: 'Ron Weasley', cohort_id: 2 },
         { id: 3, name: 'Hermione Granger', cohort_id: 2 },
-        { id: 4, name: 'Dean Thomas', cohort_id: 3 },
+        { id: 4, name: 'Colin Creevey', cohort_id: 3 },
         { id: 5, name: 'Ginny Weasley', cohort_id: 3 },
         { id: 6, name: 'Fred Weasley', cohort_id: 1 },
         { id: 7, name: 'George Weasley', cohort_id: 1 },
