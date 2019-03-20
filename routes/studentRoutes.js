@@ -24,27 +24,19 @@ router.post('/', (req, res) => {
 
 router.get('/:id', (req, res) => {
   const { id } = req.params;
-  let object = null;
-  db('students')
-    .where({ id })
-    .then(results => {
-      if (results.length) {
-        object = results[0];
-        return db('cohorts').where({ id: object.cohort_id });
-      } else
-        return res
-          .status(404)
-          .json({ error: 'No student with this ID found.' });
-    })
-    .then(cohort => {
-      if (cohort.length) {
-        object.cohort = cohort[0].name;
-        delete object.cohort_id;
-        return res.json({ student: object });
-      } else {
-        object.warning = 'Student belongs to a cohort that does not exist!';
-        return res.json({ student: object });
-      }
+  db.select(
+    // Way to exclude just one column from SELECT * ?
+    'students.id AS id',
+    'students.name AS name',
+    'cohorts.name AS cohort_name',
+    'students.createdAt AS createdAt'
+  )
+    .from('students')
+    .where({ 'students.id': id })
+    .innerJoin('cohorts', 'students.cohort_id', 'cohorts.id')
+    .then(response => {
+      res.send('test');
+      console.log(response);
     })
     .catch(error => res.status(500).json({ error }));
 });
