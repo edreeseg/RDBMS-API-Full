@@ -34,9 +34,12 @@ router.get('/:id', (req, res) => {
     .from('students')
     .where({ 'students.id': id })
     .innerJoin('cohorts', 'students.cohort_id', 'cohorts.id')
-    .then(response => {
-      res.send('test');
-      console.log(response);
+    .then(student => {
+      if (!student.length)
+        return res
+          .status(404)
+          .json({ error: 'No student found with that ID.' });
+      else res.json({ student: student[0] });
     })
     .catch(error => res.status(500).json({ error }));
 });
